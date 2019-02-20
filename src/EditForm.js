@@ -9,16 +9,16 @@ const CityList = (props) => {
     return <select name="eventCity" onChange={props.handleChange}>{rows}</select>;
 }
 
-class Form extends Component {
+class EditForm extends Component {
     constructor(props) {
         super(props);
 
         this.initialState = {
-            memberName: '',
-            memberEmail: '',
-            memberPhone: '',
-            memberPhoto: '',
-            eventCity: ''
+            memberName: this.props.editInfo[0].memberName,
+            memberEmail: this.props.editInfo[0].memberEmail,
+            memberPhone: this.props.editInfo[0].memberPhone,
+            memberPhoto: this.props.editInfo[0].memberPhoto,
+            eventCity: this.props.editInfo[0].eventCity
         };
 
         this.validation = {
@@ -52,11 +52,11 @@ class Form extends Component {
         }
     };
 
-    onFormSubmit = e => {
+    onFormSave = e => {
         e.preventDefault();
         if(this.validation.name && this.validation.phone && this.validation.email) {
-            alert("Участник добавлен");
-            this.props.handleSubmit(this.state);
+            alert("Информация отредактирована");
+            this.props.handleEdit(this.state);
             this.setState(this.initialState);
         } else {
             alert("Заполните корректно поля");
@@ -88,16 +88,16 @@ class Form extends Component {
             });
         }
     }
-    /*form will consist from number(autocomplete)*/
 
     render() {
         const {memberName, memberEmail, memberPhone} = this.state;
         const {name, email, phone} = this.validation;
 
         return (
-            <form onSubmit={this.onFormSubmit}>
+            <form className="editForm" onSubmit={this.onFormSave}>
+                <button onClick={this.props.closeForm}>X</button>
                 <fieldset>
-                    <legend>Добавить участника в группу</legend>
+                    <legend>Редактировать</legend>
                     <label>ФИО</label>
                     <span className="error">
                         {name ? "" : "Имя должно содержать только буквы"}
@@ -142,7 +142,7 @@ class Form extends Component {
                            onChange={this.handleFile}
                            name="memberPhoto"/>
                     <button type="submit" className="submit-btn">
-                        Добавить
+                        Сохранить
                     </button>
                 </fieldset>
             </form>
@@ -150,4 +150,4 @@ class Form extends Component {
     }
 }
 
-export default Form;
+export default EditForm;

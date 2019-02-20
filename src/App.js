@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Form from './Form.js';
 import Table from './Table.js';
+import EditForm from "./EditForm";
 
 class App extends Component {
 
@@ -8,7 +9,9 @@ class App extends Component {
         super(props);
         this.state = {
             membersData: [],
-            cities: ["Москва", "Санкт-Петербург", "Екатеринбург", "Нижний Новгород", "Новосибирск", "Казань", "Челябинск", "Омск", "Самара", "Ростов-на-Дону"]
+            editMode: false,
+            editInfo: [],
+            cities: ["", "Москва", "Санкт-Петербург", "Екатеринбург", "Нижний Новгород", "Новосибирск", "Казань", "Челябинск", "Омск", "Самара", "Ростов-на-Дону"]
         }
     }
 
@@ -65,17 +68,31 @@ class App extends Component {
         this.setState({membersData: [...this.state.membersData, memberData]});
     }
 
-    editAd = index => {
-        const {membersData} = this.state;
-        const formTitle = document.getElementsByTagName('input')[0];
-        const formCity = document.getElementsByTagName('input')[1];
-        const formNumber = document.getElementsByTagName('input')[2];
-        formTitle.value = membersData[index].memberName;
-        formCity.value = membersData[index].memberCity;
-        formNumber.value = membersData[index].memberPhone;
-        console.log(membersData[index]);
-        formTitle.focus();
+    closeForm =() => {
+        this.setState({
+            editMode: false,
+            editInfo: []
+        });
+    };
+
+    handleEdit = memberData => {
+        const memberIndex = this.state.editInfo[1];
+        this.state.membersData.splice([memberIndex], 1, memberData);
+
+        this.setState({
+            editMode: false,
+            editInfo: []
+        });
     }
+
+    editMemberInfo = index => {
+        const {membersData} = this.state;
+        const member = membersData[index];
+
+        this.setState({
+            editMode: true,
+            editInfo: [member, index]});
+    };
 
     removeMember = index => {
         const {membersData} = this.state;
@@ -85,12 +102,10 @@ class App extends Component {
                 return i !== index;
             })
         });
-
-        console.log(this.cities);
-    }
+    };
 
     render() {
-        const {membersData, cities} = this.state;
+        const {membersData, editInfo, cities} = this.state;
         return (
             <div className="container">
                 <Form handleSubmit={this.handleSubmit}
@@ -100,6 +115,12 @@ class App extends Component {
                 <Table editMemberInfo={this.editMemberInfo}
                        removeMember={this.removeMember}
                        membersData={membersData}/>
+                {this.state.editMode ?
+                    <EditForm handleEdit={this.handleEdit}
+                              membersData={membersData}
+                              editInfo={editInfo}
+                              closeForm={this.closeForm}
+                              cities={cities}/>: ""}
             </div>
         );
     }

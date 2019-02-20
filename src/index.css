@@ -13,6 +13,7 @@ body {
     background-color: #fff;
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
 h3,
@@ -41,6 +42,14 @@ p {
     font-size: 14px;
     color: #68717c;
     line-height: 1.57;
+}
+
+img,
+.noImg {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    object-fit: cover;
 }
 
 .number {
@@ -118,6 +127,10 @@ form label {
     margin-right: 10px;
 }
 
+select {
+    margin-bottom: 15px;
+}
+
 .submit-btn {
     display: block;
     cursor: pointer;
@@ -137,30 +150,28 @@ form label {
 }
 
 .edit-btn {
-    font-size: 24px;
+    font-size: 28px;
     display: block;
     background-color: #fff;
     cursor: pointer;
-    margin: 5px;
-    object-fit: contain;
+    margin: 3px;
     border-radius: 3px;
     color: #2d74da;
     outline: none;
-    border: 1px solid #2d74da;
+    border: none;
 }
 
 .delete-btn {
-    font-size: 30px;
+    font-size: 40px;
     display: block;
     background-color: #fff;
     cursor: pointer;
-    margin: 5px;
+    margin: 3px;
     object-fit: contain;
     border-radius: 3px;
     color: #fa5e5b;
     outline: none;
-    border: 1px solid #fa5e5b;
-    padding: 0 10px;
+    border: none;
 }
 
 .member {
@@ -169,9 +180,32 @@ form label {
     margin: 10px 0;
     padding: 10px 0 0 10px;
     border: 1px solid darkgreen;
+    position: relative;
 }
 
 .btn-wrapper {
     display: flex;
     justify-content: flex-end;
+}
+
+.editForm {
+    background-color: greenyellow;
+    position: absolute;
+    padding-left: 50px;
+    top: 40px;
+    left: 500px;
+    z-index: 2;
+}
+
+.editForm button {
+    float: right;
+    margin: 20px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.editForm .submit-btn {
+    width: 141px;
+    height: 36px;
 }
